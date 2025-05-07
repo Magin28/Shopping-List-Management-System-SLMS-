@@ -85,3 +85,16 @@ class ModernShoppingListApp(tk.Tk):
         ttk.Button(self.footer_frame, text="📄 Eksportuj do TXT", command=self.save_to_txt).pack(side="left", padx=5)
         ttk.Button(self.footer_frame, text="📊 Eksportuj do PDF", command=self.save_to_pdf).pack(side="left", padx=5)
         ttk.Button(self.footer_frame, text="⟳ Odśwież", command=self.update_display).pack(side="right", padx=5)
+    def _configure_styles(self):
+        self.style = ttk.Style()
+        self.style.theme_use("clam")
+        theme = self.theme
+        self.style.configure("TFrame", background=theme["bg"])
+        self.style.configure("TLabel", background=theme["bg"], foreground=theme["fg"], font=("Segoe UI", 10))
+        self.style.configure("TButton", background=theme["accent"], foreground=theme["fg"], borderwidth=0, font=("Segoe UI", 10), padding=8)
+        self.style.map("TButton", background=[("active", theme["hover"])])
+        self.style.configure("Treeview.Heading", background=theme["header_bg"], foreground=theme["header_fg"], font=("Segoe UI", 11, "bold"), padding=6)
+        self.style.configure("Treeview", background=theme["tree_bg"], foreground=theme["tree_fg"], fieldbackground=theme["tree_bg"], font=("Segoe UI", 11), rowheight=30)
+        self.style.configure("TCombobox", fieldbackground=theme["widget_bg"], background=theme["widget_bg"], foreground=theme["text"])
+        self.style.configure("TEntry", fieldbackground=theme["widget_bg"], foreground=theme["text"])
+
