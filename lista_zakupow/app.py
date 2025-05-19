@@ -100,6 +100,7 @@ class ModernShoppingListApp(tk.Tk):
         self.style.configure("TCombobox", fieldbackground=theme["widget_bg"], background=theme["widget_bg"], foreground=theme["text"])
         self.style.configure("TEntry", fieldbackground=theme["widget_bg"], foreground=theme["text"])
 
+
     def update_theme(self):
         self.theme = ThemeManager.get_themes()[self.shopping_list.current_theme]
         self.configure(background=self.theme["bg"])
@@ -118,3 +119,4 @@ class ModernShoppingListApp(tk.Tk):
         self.shopping_list.current_theme = "dark" if self.shopping_list.current_theme == "light" else "light"
         self.update_theme()
         self.shopping_list.save_data()
+
