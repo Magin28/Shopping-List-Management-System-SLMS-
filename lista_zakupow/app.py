@@ -156,3 +156,31 @@ class ModernShoppingListApp(tk.Tk):
             self.shopping_list.delete_list(list_name)
             self.update_combobox()
             self.update_display()
+    def save_list(self):
+        self.shopping_list.save_data()
+        messagebox.showinfo("Sukces", "Dane zapisane!")
+
+    def load_data(self):
+        self.shopping_list.load_data()
+        self.update_combobox()
+        self.update_display()
+
+    def save_to_txt(self):
+        if not (list_name := self.current_list.get()):
+            messagebox.showerror("Błąd", "Wybierz listę do eksportu!")
+            return
+        if file_path := filedialog.asksaveasfilename(defaultextension=".txt", filetypes=[("Pliki tekstowe", "*.txt")], initialfile=f"{list_name}.txt"):
+            exporter.export_to_txt(list_name, self.shopping_list.lists[list_name], file_path)
+            messagebox.showinfo("Sukces", "Lista zapisana do TXT!")
+
+    def save_to_pdf(self):
+        if not (list_name := self.current_list.get()):
+            messagebox.showerror("Błąd", "Wybierz listę do eksportu!")
+            return
+        if file_path := filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("Pliki PDF", "*.pdf")], initialfile=f"{list_name}.pdf"):
+            exporter.export_to_pdf(list_name, self.shopping_list.lists[list_name], file_path)
+            messagebox.showinfo("Sukces", "Lista zapisana do PDF!")
+
+    def on_close(self):
+        self.shopping_list.save_data()
+        self.destroy()
