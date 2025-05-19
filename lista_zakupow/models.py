@@ -29,3 +29,28 @@ class ShoppingList:
             del self.lists[list_name]
             return True
         return False
+
+    def save_data(self):
+        data = {
+            "theme": self.current_theme,
+            "lists": {name: [{"name": p.name, "category": p.category} for p in products]
+                      for name, products in self.lists.items()}
+        }
+        with open("shopping_lists.json", "w") as f:
+            json.dump(data, f)
+
+    def load_data(self):
+        if os.path.exists("shopping_lists.json"):
+            with open("shopping_lists.json", "r") as f:
+                try:
+                    data = json.load(f)
+                    self.current_theme = data.get("theme", "light")
+                    self.lists = {
+                        name: [Product(p["name"], p["category"]) for p in products]
+                        for name, products in data.get("lists", {}).items()
+                    }
+                except Exception as e:
+                    print(f"Błąd ładowania danych: {str(e)}")
+                    self.lists = {}
+        else:
+            self.lists = {}
