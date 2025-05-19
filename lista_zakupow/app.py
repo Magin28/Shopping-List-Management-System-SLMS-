@@ -119,4 +119,40 @@ class ModernShoppingListApp(tk.Tk):
         self.shopping_list.current_theme = "dark" if self.shopping_list.current_theme == "light" else "light"
         self.update_theme()
         self.shopping_list.save_data()
+    def add_list(self):
+        list_name = self.list_entry.get()
+        if list_name and self.shopping_list.add_list(list_name):
+            self.update_combobox()
+            self.list_entry.delete(0, tk.END)
+            messagebox.showinfo("Sukces", f"Lista '{list_name}' dodana!")
+        else:
+            messagebox.showwarning("Uwaga", "Lista już istnieje!")
 
+    def add_product(self):
+        list_name = self.current_list.get()
+        product = self.product_entry.get()
+        category = self.category_combobox.get()
+        if list_name and product and category:
+            if self.shopping_list.add_product(list_name, product, category):
+                self.update_display()
+                self.product_entry.delete(0, tk.END)
+                self.category_combobox.set('')
+
+    def update_display(self):
+        self.tree.delete(*self.tree.get_children())
+        if list_name := self.current_list.get():
+            for idx, product in enumerate(self.shopping_list.lists.get(list_name, [])):
+                tag = "evenrow" if idx % 2 == 0 else "oddrow"
+                self.tree.insert("", "end", values=(product.name, product.category), tags=(tag,))
+
+    def update_combobox(self):
+        lists = list(self.shopping_list.lists.keys())
+        self.list_combobox["values"] = lists
+        if lists:
+            self.current_list.set(lists[0])
+
+    def delete_list(self):
+        if (list_name := self.current_list.get()) and messagebox.askyesno("Potwierdź", f"Usunąć listę '{list_name}'?"):
+            self.shopping_list.delete_list(list_name)
+            self.update_combobox()
+            self.update_display()
