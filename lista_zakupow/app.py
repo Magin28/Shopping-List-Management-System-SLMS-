@@ -18,6 +18,7 @@ class ModernShoppingListApp(tk.Tk):
         self.load_data()
         self.update_theme()
         self.protocol("WM_DELETE_WINDOW", self.on_close)
+
     def _create_widgets(self):
         self.main_frame = ttk.Frame(self)
         self.main_frame.pack(fill="both", expand=True)
@@ -85,6 +86,7 @@ class ModernShoppingListApp(tk.Tk):
         ttk.Button(self.footer_frame, text="📄 Eksportuj do TXT", command=self.save_to_txt).pack(side="left", padx=5)
         ttk.Button(self.footer_frame, text="📊 Eksportuj do PDF", command=self.save_to_pdf).pack(side="left", padx=5)
         ttk.Button(self.footer_frame, text="⟳ Odśwież", command=self.update_display).pack(side="right", padx=5)
+
     def _configure_styles(self):
         self.style = ttk.Style()
         self.style.theme_use("clam")
@@ -97,4 +99,24 @@ class ModernShoppingListApp(tk.Tk):
         self.style.configure("Treeview", background=theme["tree_bg"], foreground=theme["tree_fg"], fieldbackground=theme["tree_bg"], font=("Segoe UI", 11), rowheight=30)
         self.style.configure("TCombobox", fieldbackground=theme["widget_bg"], background=theme["widget_bg"], foreground=theme["text"])
         self.style.configure("TEntry", fieldbackground=theme["widget_bg"], foreground=theme["text"])
+
+
+    def update_theme(self):
+        self.theme = ThemeManager.get_themes()[self.shopping_list.current_theme]
+        self.configure(background=self.theme["bg"])
+        self._configure_styles()
+        self._update_widget_colors()
+
+    def _update_widget_colors(self):
+        for widget in [self.main_frame, self.header_frame, self.content_frame, self.left_panel, self.right_panel, self.form_frame, self.footer_frame]:
+            widget.configure(style="TFrame")
+        self.tree.tag_configure("oddrow", background=self.theme["secondary_bg"])
+        self.tree.tag_configure("evenrow", background=self.theme["bg"])
+        self.title_label.configure(foreground=self.theme["fg"])
+        self.theme_button.configure(text="🌙" if self.shopping_list.current_theme == "light" else "☀️")
+
+    def toggle_theme(self):
+        self.shopping_list.current_theme = "dark" if self.shopping_list.current_theme == "light" else "light"
+        self.update_theme()
+        self.shopping_list.save_data()
 
