@@ -187,10 +187,10 @@ class ModernShoppingListApp(tk.Tk):
         self.shopping_list.save_data()
         self.destroy()
     def delete_selected_product(self):
-    selected = self.tree.selection()
-    if selected:
-        item = self.tree.item(selected[0])
-        product_name, category = item["values"]
-        list_name = self.current_list.get()
-        if self.shopping_list.delete_product(list_name, product_name, category):
-            self.update_display()
+        selected = self.tree.selection()
+        if selected:
+            item = self.tree.item(selected[0])
+            product_name, category = item["values"]
+            list_name = self.current_list.get()
+            if self.shopping_list.delete_product(list_name, product_name, category):
+                self.update_display()
