@@ -23,6 +23,15 @@ class ShoppingList:
             self.lists[list_name].append(Product(product_name, category))
             return True
         return False
+        
+    def delete_product(self, list_name, product_name, category):
+    if list_name in self.lists:
+        for i, p in enumerate(self.lists[list_name]):
+            if p.name == product_name and p.category == category:
+                del self.lists[list_name][i]
+                return True
+    return False
+
 
     def delete_list(self, list_name):
         if list_name in self.lists:
