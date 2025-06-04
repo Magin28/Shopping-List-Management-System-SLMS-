@@ -18,7 +18,7 @@
 ## 🐍 Technologie
 
 - **Python 3.10+**
-- **Tkinter** (wbudowany GUI) lub **PyQt5** (jeśli używane)
+- **Tkinter**  
 - **Git + GitHub** – kontrola wersji
 - **GitHub Projects** – zarządzanie zadaniami (Kanban)
 - **Scrum** – podział pracy na sprinty, role zespołowe
