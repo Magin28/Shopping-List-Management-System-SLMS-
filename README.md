@@ -11,7 +11,7 @@
 - ✅ Usuwanie elementów z listy
 - ✅ Oznaczanie produktów jako kupione
 - ✅ Zapisywanie i wczytywanie listy z pliku (np. `.txt` lub `.json`)
-- ✅ Przejrzysty interfejs graficzny (Tkinter / PyQt)
+- ✅ Przejrzysty interfejs graficzny (Tkinter)
 
 ---
 
